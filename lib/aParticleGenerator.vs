@@ -1,3 +1,4 @@
+#DEFINE MAX_PLANE 999999
 GeneratedParticle : inherit [Particle]
 
 #ENABLE LOCALCLIENTCODE
@@ -8,7 +9,6 @@ var LIBRARY_particleArray = []
 var LIBRARY_activeGenerators = []
 const PARTICLE_GENERATOR_TICK_RATE = 10
 const MAX_ELAPSED_MS = 100
-var MAX_PLANE = 999999;
 
 Client
 	onWindowFocus()
