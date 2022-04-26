@@ -244,35 +244,38 @@ function createParticleGenerator(pSettings, pEmitter)
 					if (Util.isNumber(pSettings.light.color) || Util.isString(pSettings.light.color))
 						generator.settings.light.color = aUtils.grabColor(pSettings.light.color).decimal
 					else
-						// warning that this is a invalid variable type for this variable
+						JS.console.warn('aParticleGenerator: Invalid variable type passed for the %cpSettings.light.color', 'font-weight: bold', 'property.');
 
 				if (pSettings.light.size)
 					if (Util.isNumber(pSettings.light.size))
 						generator.settings.light.size = pSettings.light.size
 					else
-						// warning that this is a invalid variable type for this variable
+						JS.console.warn('aParticleGenerator: Invalid variable type passed for the %cpSettings.light.size', 'font-weight: bold', 'property.');
 
 				if (pSettings.light.brightness)
 					if (Util.isNumber(pSettings.light.brightness))
 						generator.settings.light.brightness = pSettings.light.brightness
 					else
-						// warning that this is a invalid variable type for this variable
+						JS.console.warn('aParticleGenerator: Invalid variable type passed for the %cpSettings.light.brightness', 'font-weight: bold', 'property.');
 
 				if (pSettings.light.offset)
-					if (Util.isObject(pSettings.light.offset))
+					if (Util.isNumber(pSettings.light.offset))
+						generator.settings.light.offset.x = pSettings.light.offset
+						generator.settings.light.offset.y = pSettings.light.offset
+					else if (Util.isObject(pSettings.light.offset))
 						if (Util.isNumber(pSettings.light.offset.x) && Util.isNumber(pSettings.light.offset.y))
 							generator.settings.light.offset.x = pSettings.light.offset.x
 							generator.settings.light.offset.y = pSettings.light.offset.y
 						else
-							// warning that these are invalid variable types for this object
+							JS.console.warn('aParticleGenerator: Invalid variable type passed for the %cpSettings.light.offset.x || pSettings.light.offset.y', 'font-weight: bold', 'property.');
 					else
-						// warning that this is a invalid variable type for this variable
+						JS.console.warn('aParticleGenerator: Invalid variable type passed for the %cpSettings.light.offset', 'font-weight: bold', 'property.');
 
 				// num or object with `x` and `y` as numbers
 				if (pSettings.light.cullDistance)
-					if (Util.isNumber(pSettings.lightcullDistance))
-						generator.settings.light.cullDistance.x = pSettings.cullDistance / Client.mapView.scale.x;
-						generator.settings.light.cullDistance.y = pSettings.cullDistance / Client.mapView.scale.y;
+					if (Util.isNumber(pSettings.light.cullDistance))
+						generator.settings.light.cullDistance.x = pSettings.light.cullDistance / Client.mapView.scale.x;
+						generator.settings.light.cullDistance.y = pSettings.light.cullDistance / Client.mapView.scale.y;
 					else if (Util.isObject(pSettings.light.cullDistance))
 						if (Util.isNumber(pSettings.light.cullDistance.x) && Util.isNumber(pSettings.light.cullDistance.y))
 							generator.settings.light.cullDistance.x = pSettings.light.cullDistance.x / Client.mapView.scale.x;
@@ -1257,7 +1260,8 @@ GeneratedParticle : inherit [Particle]
 		this.composite = pInfo.composite
 		this.info.composite = pInfo.composite
 		// MapInfo
-		this.info.mapInfo = pInfo.mapInfo
+		this.info.mapInfo = {}
+		Util.copyObject(this.info.mapInfo, pInfo.mapInfo);
 		// InterfaceInfo
 		this.info.interfaceInfo = {}
 		Util.copyObject(this.info.interfaceInfo, pInfo.interfaceInfo);
@@ -1433,12 +1437,13 @@ GeneratedParticle : inherit [Particle]
 					this.setPos(randomPaddingX + this.info.trajectory.x, randomPaddingY + this.info.trajectory.y, this.info.mapInfo.mapName)
 		// Light
 		if (pOwner.usingLights)
-			let color = pInfo.light.color ? pInfo.light.color : 0xFFFFFF
-			let size = pInfo.light.size ? pInfo.light.size : 5
-			let brightness = pInfo.light.brightness ? pInfo.light.brightness : 5
-			let offsetX = pInfo.light?.offset.x ? pInfo.light?.offset.x : 0
-			let offsetY = pInfo.light?.offset.y ? pInfo.light?.offset.y : 0
-			aLight.attachLight(this, { 'color': color, 'size': size, 'brightness': brightness, 'offset': { 'x': offsetX, 'y': offsetY }, 'center': true, 'id': this.id })
+			const color = pInfo.light.color ? pInfo.light.color : 0xFFFFFF
+			const size = pInfo.light.size ? pInfo.light.size : 5
+			const brightness = pInfo.light.brightness ? pInfo.light.brightness : 5
+			const offset = pInfo.light?.offset
+			const fadeDistance =  pInfo.light?.fadeDistance ? pInfo.light.fadeDistance : 0
+			const cullDistance =  pInfo.light?.cullDistance ? pInfo.light.cullDistance : 0
+			aLight.attachLight(this, { 'color': color, 'size': size, 'brightness': brightness, 'offset': offset, 'fadeDistance': fadeDistance, 'cullDistance': cullDistance, 'center': true, 'id': this.id })
 		// this.text = 'Plane: ' + this.plane + ' Layer: ' + this.layer + ' Composite: ' + this.composite
 
 	function setTrajectory()
