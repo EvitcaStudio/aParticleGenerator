@@ -1229,7 +1229,7 @@ GeneratedParticle : inherit [Particle]
 		this.name = this.id
 		// you are just precreating some of these types, so no need to run the code just yet
 		// this is so a interface particle doesn not gets its `onNew` called again since we use `Client.addInterfaceElement`
-		if ((!pInfo && !pOwner && !pBypass) || pBypass)
+		if (pBypass)
 			return
 		// All data coming in has already been prechecked, we just need to grab and assign a few things
 		let lifetimePercent
