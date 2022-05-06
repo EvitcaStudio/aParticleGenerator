@@ -85,12 +85,12 @@ function createParticleGenerator(pSettings, pEmitter)
 	let missingPIXIJS = JS.PIXI.filters.OutlineFilter ? false : true
 	if (missingaUtils || missingaRecycle)
 		if (missingaUtils)
-			JS.console.error('aParticleGenerator[createParticleGenerator]: The %caUtils', 'font-weight: bold', 'library is missing. Please obtain it from https://github.com/aHouseStudio/aUtils')
+			JS.console.error('aParticleGenerator[createParticleGenerator]: The %caUtils', 'font-weight: bold', 'library is missing. Please obtain it from https://github.com/EvitcaStudio/aUtils')
 		if (missingaRecycle)
-			JS.console.error('aParticleGenerator[createParticleGenerator]: The %caRecycle', 'font-weight: bold', 'library is missing. Please obtain it from https://github.com/aHouseStudio/aRecycle')
+			JS.console.error('aParticleGenerator[createParticleGenerator]: The %caRecycle', 'font-weight: bold', 'library is missing. Please obtain it from https://github.com/EvitcaStudio/aRecycle')
 		if (missingaLight || missingPIXIJS)
 			if (missingaLight)
-				JS.console.warn('aParticleGenerator[createParticleGenerator]: The %caLight', 'font-weight: bold', 'library is missing. This library is ONLY needed if you want to use the light property. Please obtain it from https://github.com/aHouseStudio/aLight')
+				JS.console.warn('aParticleGenerator[createParticleGenerator]: The %caLight', 'font-weight: bold', 'library is missing. This library is ONLY needed if you want to use the light property. Please obtain it from https://github.com/EvitcaStudio/aLight')
 			if (missingPIXIJS)
 				JS.console.warn('aParticleGenerator[createParticleGenerator]: The %cpixiJS filters', 'font-weight: bold', 'library is missing. This library is ONLY needed if you want to use the outlineFilter or bloomFilter property. Please obtain it from https://www.npmjs.com/package/pixi-filters')
 		return
@@ -108,19 +108,19 @@ function createParticleGenerator(pSettings, pEmitter)
 		if (Util.getVariableType(pSettings.sizeOverLifetime) === 'function')
 			generator.settings.sizeOverLifetime = pSettings.sizeOverLifetime
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	if (pSettings.speedOverLifetime)
 		if (Util.getVariableType(pSettings.speedOverLifetime) === 'function')
 			generator.settings.speedOverLifetime = pSettings.speedOverLifetime
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	if (pSettings.alphaOverLifetime)
 		if (Util.getVariableType(pSettings.alphaOverLifetime) === 'function')
 			generator.settings.alphaOverLifetime = pSettings.alphaOverLifetime
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	// Valid texture(s) for the particle to use
 	let validTextures = Icon.getIconNames('particle_atlas')
@@ -158,28 +158,34 @@ function createParticleGenerator(pSettings, pEmitter)
 	// Plane
 	if (pSettings.plane || pSettings.plane === 0)
 		if (Util.isObject(pSettings.plane))
-			if (Util.isNumber(pSettings.plane?.randomBetween[0]) && Util.isNumber(pSettings.plane?.randomBetween[1]))
-				generator.settings.plane = pSettings.plane
+			if (Util.isArray(pSettings.plane.randomBetween))
+				if (Util.isNumber(pSettings.plane.randomBetween[0]) && Util.isNumber(pSettings.plane.randomBetween[1]))
+					generator.settings.plane = pSettings.plane
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 
 		else if (Util.isNumber(pSettings.plane))
 			generator.settings.plane = pSettings.plane
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	// Layer
 	if (pSettings.layer || pSettings.layer === 0)
 		if (Util.isObject(pSettings.layer))
-			if (Util.isNumber(pSettings.layer?.randomBetween[0]) && Util.isNumber(pSettings.layer?.randomBetween[1]))
-				generator.settings.layer = pSettings.layer
+			if (Util.isArray(pSettings.layer.randomBetween))
+				if (Util.isNumber(pSettings.layer.randomBetween[0]) && Util.isNumber(pSettings.layer.randomBetween[1]))
+					generator.settings.layer = pSettings.layer
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 
 		else if (Util.isNumber(pSettings.layer))
 			generator.settings.layer = pSettings.layer
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	// Loop
 	if (!pSettings.loop)
@@ -202,12 +208,15 @@ function createParticleGenerator(pSettings, pEmitter)
 
 		// If pSettings.padding is a object
 		else if (Util.isObject(pSettings.padding))
-			if (Util.isNumber(pSettings.padding?.randomBetween[0]) && Util.isNumber(pSettings.padding?.randomBetween[1]))
-				generator.settings.padding = pSettings.padding
+			if (Util.isArray(pSettings.padding.randomBetween))
+				if (Util.isNumber(pSettings.padding.randomBetween[0]) && Util.isNumber(pSettings.padding.randomBetween[1]))
+					generator.settings.padding = pSettings.padding
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.texture exists
 	if (pSettings.texture)
@@ -222,7 +231,7 @@ function createParticleGenerator(pSettings, pEmitter)
 				JS.console.warn('aParticleGenerator[texture]: Invalid variable %ctexture', 'font-weight: bold', '(' + pSettings.texture[i] + ') passed in the texture array. It has been removed. This may be a texture that has failed to load properly.')
 			generator.settings.texture = pSettings.texture
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
 		// warning that this was not passed and the default of `particle` has been used
 
@@ -235,7 +244,7 @@ function createParticleGenerator(pSettings, pEmitter)
 			else
 				JS.console.warn('aParticleGenerator[composite]: Invalid variable %ccomposite', 'font-weight: bold', '(' + pSettings.composite + ') passed in the composite property. Default value used.')
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 
 	if (pSettings.light)
 		if (aLight)
@@ -305,7 +314,7 @@ function createParticleGenerator(pSettings, pEmitter)
 
 				generator.usingLights = true
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
 			JS.console.error('aParticleGenerator[light]: The %caLight', 'font-weight: bold', 'library is missing. Please obtain it from https://github.com/aHouseStudio/aLight')
 
@@ -331,14 +340,14 @@ function createParticleGenerator(pSettings, pEmitter)
 					if (Util.isNumber(pSettings.outlineFilter.thickness))
 						generator.settings.outlineFilter.thickness = pSettings.outlineFilter.thickness
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.outlineFilter.color || pSettings.outlineFilter.color === 0)
 					// hex and decimal only
 					if (Util.isNumber(pSettings.outlineFilter.color) || Util.isString(pSettings.outlineFilter.color))
 						generator.settings.outlineFilter.color = aUtils.grabColor(pSettings.outlineFilter.color).decimal
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.outlineFilter.quality || pSettings.outlineFilter.quality === 0)
 					if (Util.isNumber(pSettings.outlineFilter.quality))
@@ -346,7 +355,7 @@ function createParticleGenerator(pSettings, pEmitter)
 							JS.console.warn('aParticleGenerator[outlineFilter]: Using a higher %cquality', 'font-weight: bold', 'setting will result in slower performance and more accuracy.')
 						generator.settings.outlineFilter.quality = Math.clamp(pSettings.outlineFilter.quality, 0, 1)
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				usingOutline = true
 		else
@@ -374,49 +383,49 @@ function createParticleGenerator(pSettings, pEmitter)
 					if (Util.isNumber(pSettings.bloomFilter.threshold))
 						generator.settings.bloomFilter.threshold = pSettings.bloomFilter.threshold
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.bloomFilter.bloomScale || pSettings.bloomFilter.bloomScale === 0)
 					if (Util.isNumber(pSettings.bloomFilter.bloomScale))
 						generator.settings.bloomFilter.bloomScale = pSettings.bloomFilter.bloomScale
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.bloomFilter.brightness || pSettings.bloomFilter.brightness === 0)
 					if (Util.isNumber(pSettings.bloomFilter.brightness))
 						generator.settings.bloomFilter.brightness = pSettings.bloomFilter.brightness
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.bloomFilter.blur || pSettings.bloomFilter.blur === 0)
 					if (Util.isNumber(pSettings.bloomFilter.blur))
 						generator.settings.bloomFilter.blur = pSettings.bloomFilter.blur
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.bloomFilter.quality || pSettings.bloomFilter.quality === 0)
 					if (Util.isNumber(pSettings.bloomFilter.quality))
 						generator.settings.bloomFilter.quality = pSettings.bloomFilter.quality
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 /* 
 				if (pSettings.bloomFilter.kernels || pSettings.bloomFilter.kernels === 0)
 					if (Util.isNumber(pSettings.bloomFilter.kernels))
 						generator.settings.bloomFilter.kernels = pSettings.bloomFilter.kernels
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 */
 				if (pSettings.bloomFilter.pixelSize || pSettings.bloomFilter.pixelSize === 0)
 					if (Util.isNumber(pSettings.bloomFilter.pixelSize))
 						generator.settings.bloomFilter.pixelSize = pSettings.bloomFilter.pixelSize
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				if (pSettings.bloomFilter.resolution || pSettings.bloomFilter.resolution === 0)
 					if (Util.isNumber(pSettings.bloomFilter.resolution))
 						generator.settings.bloomFilter.resolution = pSettings.bloomFilter.resolution
 					else
-						// warning that this is a invalid variable type for this variable
+						// warning that this is an invalid variable type for this variable
 
 				usingBloom = true
 		else
@@ -444,47 +453,51 @@ function createParticleGenerator(pSettings, pEmitter)
 	if (pSettings.orientation && Util.isString(pSettings.orientation))
 		generator.settings.orientation = pSettings.orientation
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.angleOverLifetime exists and checking if it is a number
 	if (pSettings.angleOverLifetime || pSettings.angleOverLifetime === 0 && Util.isNumber(pSettings.angleOverLifetime))
 		generator.settings.angleOverLifetime = pSettings.angleOverLifetime
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.alphaOverLifetime exists and checking if it is a function
 	if (pSettings.alphaOverLifetime && Util.getVariableType(pSettings.alphaOverLifetime) === 'function')
 		generator.settings.alphaOverLifetime = pSettings.alphaOverLifetime
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if settings.colorOverLifetime exists and checking if it is string, object, or number
 	if (pSettings.colorOverLifetime)
 		if (Util.isString(pSettings.colorOverLifetime))
 			generator.settings.colorOverLifetime = pSettings.colorOverLifetime
 		else if (Util.isObject(pSettings.colorOverLifetime))
-			if (Util.isString(pSettings.colorOverLifetime?.randomBetween[0]) && Util.isString(pSettings.colorOverLifetime?.randomBetween[1]))
-				generator.settings.colorOverLifetime = pSettings.colorOverLifetime
+			if (Util.isArray(pSettings.colorOverLifetime.randomBetween))
+				if (Util.isString(pSettings.colorOverLifetime.randomBetween[0]) && Util.isString(pSettings.colorOverLifetime.randomBetween[1]))
+					generator.settings.colorOverLifetime = pSettings.colorOverLifetime
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
+
 		else if (Util.isNumber(pSettings.colorOverLifetime))
 			generator.settings.colorOverLifetime = pSettings.colorOverLifetime
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.sizeOverTime exists and checking if it is a function
 	if (pSettings.sizeOverTime && Util.getVariableType(pSettings.sizeOverTime) === 'function')
 		generator.settings.sizeOverTime = pSettings.sizeOverTime
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.speedOverTime exists and checking if it is a function
 	if (pSettings.speedOverTime && Util.getVariableType(pSettings.speedOverTime) === 'function')
 		generator.settings.speedOverTime = pSettings.speedOverTime
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.startColor exists
 	if (pSettings.startColor)
@@ -494,14 +507,17 @@ function createParticleGenerator(pSettings, pEmitter)
 		
 		// If pSettings.startColor is a object
 		else if (Util.isObject(pSettings.startColor))
-			if (Util.isString(pSettings.startColor?.randomBetween[0]) && Util.isString(pSettings.startColor?.randomBetween[1]))
-				generator.settings.startColor = pSettings.startColor
+			if (Util.isArray(pSettings.startColor.randomBetween))
+				if (Util.isString(pSettings.startColor.randomBetween[0]) && Util.isString(pSettings.startColor.randomBetween[1]))
+					generator.settings.startColor = pSettings.startColor
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 	
 	// Check if pSettings.startLifetime exists
 	if (pSettings.startLifetime || pSettings.startLifetime === 0)
@@ -511,14 +527,17 @@ function createParticleGenerator(pSettings, pEmitter)
 		
 		// If pSettings.startLifetime is a object
 		else if (Util.isObject(pSettings.startLifetime))
-			if (Util.isNumber(pSettings.startLifetime?.randomBetween[0]) && Util.isNumber(pSettings.startLifetime?.randomBetween[1]))
-				generator.settings.startLifetime = pSettings.startLifetime
+			if (Util.isArray(pSettings.startLifetime.randomBetween))
+				if (Util.isNumber(pSettings.startLifetime.randomBetween[0]) && Util.isNumber(pSettings.startLifetime.randomBetween[1]))
+					generator.settings.startLifetime = pSettings.startLifetime
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.startAngle exists
 	if (pSettings.startAngle || pSettings.startAngle === 0)
@@ -528,14 +547,17 @@ function createParticleGenerator(pSettings, pEmitter)
 		
 		// If pSettings.startAngle is a object
 		else if (Util.isObject(pSettings.startAngle))
-			if (Util.isNumber(pSettings.startAngle?.randomBetween[0]) && Util.isNumber(pSettings.startAngle?.randomBetween[1]))
-				generator.settings.startAngle = pSettings.startAngle
+			if (Util.isArray(pSettings.startAngle.randomBetween))
+				if (Util.isNumber(pSettings.startAngle.randomBetween[0]) && Util.isNumber(pSettings.startAngle.randomBetween[1]))
+					generator.settings.startAngle = pSettings.startAngle
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.startSize exists
 	if (pSettings.startSize || pSettings.startSize === 0)
@@ -545,14 +567,17 @@ function createParticleGenerator(pSettings, pEmitter)
 		
 		// If pSettings.startSize is a object
 		else if (Util.isObject(pSettings.startSize))
-			if (Util.isNumber(pSettings.startSize?.randomBetween[0]) && Util.isNumber(pSettings.startSize?.randomBetween[1]))
-				generator.settings.startSize = pSettings.startSize
+			if (Util.isArray(pSettings.startSize.randomBetween))
+				if (Util.isNumber(pSettings.startSize.randomBetween[0]) && Util.isNumber(pSettings.startSize.randomBetween[1]))
+					generator.settings.startSize = pSettings.startSize
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.startSpeed exists
 	if (pSettings.startSpeed || pSettings.startSpeed === 0)
@@ -562,32 +587,35 @@ function createParticleGenerator(pSettings, pEmitter)
 		
 		// If pSettings.startSpeed is a object
 		else if (Util.isObject(pSettings.startSpeed))
-			if (Util.isNumber(pSettings.startSpeed?.randomBetween[0]) && Util.isNumber(pSettings.startSpeed?.randomBetween[1]))
-				generator.settings.startSpeed = pSettings.startSpeed
+			if (Util.isArray(pSettings.startSpeed.randomBetween))
+				if (Util.isNumber(pSettings.startSpeed.randomBetween[0]) && Util.isNumber(pSettings.startSpeed.randomBetween[1]))
+					generator.settings.startSpeed = pSettings.startSpeed
+				else
+					// warning that this is an invalid variable type for this variable
 			else
-				// warning that this is a invalid variable type for this variable
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.startAlpha exists and checking if it is a number or a string, if it is a string it must be === to'random'
 	if (pSettings.startAlpha || pSettings.startAlpha === 0)
 		if (Util.isNumber(pSettings.startAlpha) || Util.isString(pSettings.startAlpha) && pSettings.startAlpha === 'random')
 			generator.settings.startAlpha = pSettings.startAlpha
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.endAlpha exists and checking if it is a number or a string, if it is a string it must be === to 'random
 	if (pSettings.endAlpha || pSettings.endAlpha === 0)
 		if (Util.isNumber(pSettings.endAlpha) || Util.isString(pSettings.endAlpha) && pSettings.endAlpha === 'random')
 			generator.settings.endAlpha = pSettings.endAlpha
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.endSpeed exists
 	if (pSettings.endSpeed || pSettings.endSpeed === 0)
@@ -597,12 +625,15 @@ function createParticleGenerator(pSettings, pEmitter)
 
 		// If pSettings.endSpeed is a object
 		else if (Util.isObject(pSettings.endSpeed))
-			if (Util.isNumber(pSettings.endSpeed?.randomBetween[0]) && Util.isNumber(pSettings.endSpeed?.randomBetween[1]))
-				generator.settings.endSpeed = pSettings.endSpeed
+			if (Util.isArray(pSettings.endSpeed.randomBetween))
+				if (Util.isNumber(pSettings.endSpeed.randomBetween[0]) && Util.isNumber(pSettings.endSpeed.randomBetween[1]))
+					generator.settings.endSpeed = pSettings.endSpeed
+			else
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.endSize exists
 	if (pSettings.endSize || pSettings.endSize === 0)
@@ -612,36 +643,39 @@ function createParticleGenerator(pSettings, pEmitter)
 			
 		// If pSettings.endSize is a object
 		else if (Util.isObject(pSettings.endSize))
-			if (Util.isNumber(pSettings.endSize?.randomBetween[0]) && Util.isNumber(pSettings.endSize?.randomBetween[1]))
-				generator.settings.endSize = pSettings.endSize
+			if (Util.isArray(pSettings.endSize.randomBetween))
+				if (Util.isNumber(pSettings.endSize.randomBetween[0]) && Util.isNumber(pSettings.endSize.randomBetween[1]))
+					generator.settings.endSize = pSettings.endSize
+			else
+				// warning that this is an invalid variable type for this variable
 		else
-			// warning that this is a invalid variable type for this variable
+			// warning that this is an invalid variable type for this variable
 	else
-		// warning that this is a invalid variable type for this variable
+		// warning that this is an invalid variable type for this variable
 
 	// Check if pSettings.mapInfo exist and checking if it is a ojbect, also checking if the vars inside are of the right type
 	if (pSettings.mapInfo && Util.isObject(pSettings.mapInfo))
-		if (pSettings.mapInfo?.offset)
+		if (pSettings.mapInfo.offset)
 			if (Util.isObject(pSettings.mapInfo.offset))
-				if (Util.isNumber(pSettings.mapInfo.offset?.x) && Util.isNumber(pSettings.mapInfo.offset?.y))
+				if (Util.isNumber(pSettings.mapInfo.offset.x) && Util.isNumber(pSettings.mapInfo.offset.y))
 					generator.settings.mapInfo.offset.x = pSettings.mapInfo.offset.x
 					generator.settings.mapInfo.offset.y = pSettings.mapInfo.offset.y
 				else
 					// warning that the values were of a invalid variable type for this object
 
-		if (pSettings.mapInfo?.useEmitterDirection)
+		if (pSettings.mapInfo.useEmitterDirection)
 			generator.settings.mapInfo.useEmitterDirection = true
 
-		if (pSettings.mapInfo?.useInverseDirection)
+		if (pSettings.mapInfo.useInverseDirection)
 			generator.settings.mapInfo.useInverseDirection = true
 
-		if (Util.isNumber(pSettings.mapInfo?.xPos) && Util.isNumber(pSettings.mapInfo?.yPos) && Util.isString(pSettings.mapInfo?.mapName))
+		if (Util.isNumber(pSettings.mapInfo.xPos) && Util.isNumber(pSettings.mapInfo.yPos) && Util.isString(pSettings.mapInfo.mapName))
 			generator.settings.mapInfo = pSettings.mapInfo
-			if (pSettings.mapInfo?.useEmitterPos)
+			if (pSettings.mapInfo.useEmitterPos)
 				// Warning that you used set it to use the emitters's position but you also supplied valid positions. Supplied positions have higher priority and these are used.
 				generator.settings.mapInfo.useEmitterPos = false
 
-		else if (pSettings.mapInfo?.useEmitterPos)
+		else if (pSettings.mapInfo.useEmitterPos)
 			generator.settings.mapInfo.useEmitterPos = true
 
 		else
@@ -898,7 +932,7 @@ ParticleGenerator
 
 	function setScaleOfParticle(pParticle, pLifetimePercent)
 		if (pParticle.info.sizeOverLifetime && (pParticle.info.eSize || pParticle.info.eSize === 0))
-			let startSize = (pParticle.info.startSize?.randomBetween ? pParticle.info.sSize : pParticle.info.startSize)
+			let startSize = (pParticle.info.startSize.randomBetween ? pParticle.info.sSize : pParticle.info.startSize)
 			pParticle.scale.x = (startSize > pParticle.info.eSize ? startSize - pParticle.info.sizeOverLifetime(pLifetimePercent) * (pParticle.info.eSize ? startSize - pParticle.info.eSize : startSize) : (startSize - pParticle.info.sizeOverLifetime(pLifetimePercent) * (startSize - pParticle.info.eSize))) // try to cycle the eSize and eSize
 			pParticle.scale.y = pParticle.scale.x
 			pParticle.scale = pParticle.scale
@@ -914,7 +948,7 @@ ParticleGenerator
 
 	function setSpeedOfParticle(pParticle, pLifetimePercent)
 		if (pParticle.info.speedOverLifetime && (pParticle.info.eSpeed || pParticle.info.eSpeed === 0))
-			let startSpeed = (pParticle.info.startSpeed?.randomBetween ? pParticle.info.sSpeed : pParticle.info.startSpeed)
+			let startSpeed = (pParticle.info.startSpeed.randomBetween ? pParticle.info.sSpeed : pParticle.info.startSpeed)
 			pParticle.info.speed = (startSpeed > pParticle.info.eSpeed ? startSpeed - pParticle.info.speedOverLifetime(pLifetimePercent) * (pParticle.info.eSpeed ? startSpeed - pParticle.info.eSpeed : startSpeed) : (startSpeed - (pParticle.info.speedOverLifetime(pLifetimePercent) * Client.timeScale) * (startSpeed - pParticle.info.eSpeed)))
 			return true
 
@@ -937,14 +971,14 @@ ParticleGenerator
 					pParticle.angle = 0
 				if (pParticle.info.emitter)
 					// Update Particle's orientation if it is supposed to match the emitters direciton
-					if (pParticle.info.mapInfo?.useEmitterDirection)
-						pParticle.info.orientation = (pParticle.info.mapInfo?.useInverseDirection ? pParticle.getInverseDir(pParticle.info.emitter.dir) : pParticle.info.emitter.dir)
+					if (pParticle.info.mapInfo.useEmitterDirection)
+						pParticle.info.orientation = (pParticle.info.mapInfo.useInverseDirection ? pParticle.getInverseDir(pParticle.info.emitter.dir) : pParticle.info.emitter.dir)
 				// Update Trajectory with speed and direction
 				pParticle.setTrajectory()
 				// Update Position after speed change
 				if (pParticle.info.emitter)
-					if (pParticle.info.mapInfo?.useEmitterPos)
-						if (pParticle.info.emitter?.mapName)
+					if (pParticle.info.mapInfo.useEmitterPos)
+						if (pParticle.info.emitter.mapName)
 							pParticle.setPos(pParticle.xPos + pParticle.info.trajectory.x, pParticle.yPos + pParticle.info.trajectory.y, pParticle.info.emitter.mapName)
 				else
 					if (pParticle.info.interfaceInfo.interface)
@@ -1086,14 +1120,14 @@ ParticleGenerator
 						pParticle.info.tempAngle.y = Math.random() * (Math.prob(50) ? 1 : - 1)
 					// Update Particle's orientation if it is supposed to match the emitters direciton
 					if (pParticle.info.emitter)
-						if (pParticle.info.mapInfo?.useEmitterDirection)
-							pParticle.info.orientation = (pParticle.info.mapInfo?.useInverseDirection ? pParticle.getInverseDir(pParticle.info.emitter.dir) : pParticle.info.emitter.dir)
+						if (pParticle.info.mapInfo.useEmitterDirection)
+							pParticle.info.orientation = (pParticle.info.mapInfo.useInverseDirection ? pParticle.getInverseDir(pParticle.info.emitter.dir) : pParticle.info.emitter.dir)
 					// SetTrajectory for speed and direction after loop
 					pParticle.setTrajectory()
 					// SetPosAfterLoop	
 					if (pParticle.info.emitter)
-						if (pParticle.info.mapInfo?.useEmitterPos)
-							if (pParticle.info.emitter?.mapName)
+						if (pParticle.info.mapInfo.useEmitterPos)
+							if (pParticle.info.emitter.mapName)
 								let randomPaddingX = Math.rand(pParticle.info.emitter.xPos - pParticle.info.padding, pParticle.info.emitter.xPos + pParticle.info.padding)
 								let randomPaddingY = Math.rand(pParticle.info.emitter.yPos - pParticle.info.padding, pParticle.info.emitter.yPos + pParticle.info.padding)
 								pParticle.setPos((randomPaddingX + pParticle.info.mapInfo.offset.x) + pParticle.info.trajectory.x, (randomPaddingY + pParticle.info.mapInfo.offset.y) + pParticle.info.trajectory.y, pParticle.info.emitter.mapName)
@@ -1173,8 +1207,9 @@ GeneratedParticle : inherit [Particle]
 
 	function clean()
 		// manually cleaning each particle so a bunch of objects and variables don't need to be recreated. As the life of some particles are very short, so having to do that a bunch isn't very good for performance
-		if (this.info?.owner?.usingLights)
-			aLight.detachLight(this, this.id)
+		if (this.info)
+			if (this.info.owner && this.info.owner.usingLights)
+				aLight.detachLight(this, this.id)
 		if (this.info.interfaceInfo.interface)
 			Client.removeInterfaceElement(this.info.interfaceInfo.interface, this.id, true)
 		this.sprite.renderable = true
@@ -1249,7 +1284,7 @@ GeneratedParticle : inherit [Particle]
 		// Active
 		this.info.active = true
 		// Texture
-		if (pInfo.texture?.type)
+		if (Util.isObject(pInfo.texture) && !Util.isArray(pInfo.texture))
 			this.setAppearance(pInfo.texture)
 		else if (Util.isArray(pInfo.texture))
 			this.iconName = Util.pick(pInfo.texture)
@@ -1312,8 +1347,9 @@ GeneratedParticle : inherit [Particle]
 					colorOverLifetime = pInfo.colorOverLifetime
 			if (this.color)
 				let startColor
-				if (this.color?.tint)
-					startColor = aUtils.grabColor(this.color.tint).hex
+				if (Util.isObject(this.color))
+					if (this.color.tint)
+						startColor = aUtils.grabColor(this.color.tint).hex
 				else
 					startColor = '#FFFFFF'
 				aUtils.transitionColor(this, startColor, colorOverLifetime, pInfo.duration - this.info.lifetime)
@@ -1440,9 +1476,9 @@ GeneratedParticle : inherit [Particle]
 			const color = pInfo.light.color ? pInfo.light.color : 0xFFFFFF
 			const size = pInfo.light.size ? pInfo.light.size : 5
 			const brightness = pInfo.light.brightness ? pInfo.light.brightness : 5
-			const offset = pInfo.light?.offset
-			const fadeDistance =  pInfo.light?.fadeDistance ? pInfo.light.fadeDistance : 0
-			const cullDistance =  pInfo.light?.cullDistance ? pInfo.light.cullDistance : 0
+			const offset = pInfo.light.offset
+			const fadeDistance =  pInfo.light.fadeDistance ? pInfo.light.fadeDistance : 0
+			const cullDistance =  pInfo.light.cullDistance ? pInfo.light.cullDistance : 0
 			aLight.attachLight(this, { 'color': color, 'size': size, 'brightness': brightness, 'offset': offset, 'fadeDistance': fadeDistance, 'cullDistance': cullDistance, 'center': true, 'id': this.id })
 		// this.text = 'Plane: ' + this.plane + ' Layer: ' + this.layer + ' Composite: ' + this.composite
 
