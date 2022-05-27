@@ -1199,7 +1199,6 @@ GeneratedParticle : inherit [Particle]
 	}
 
 	onNew(pInfo, pOwner, pBypass)
-		// World.log(this)
 		this.setup(pInfo, pOwner, pBypass)
 
 	function onDumped(pInfo, pOwner, pBypass)
@@ -1207,9 +1206,8 @@ GeneratedParticle : inherit [Particle]
 
 	function clean()
 		// manually cleaning each particle so a bunch of objects and variables don't need to be recreated. As the life of some particles are very short, so having to do that a bunch isn't very good for performance
-		if (this.info)
-			if (this.info.owner && this.info.owner.usingLights)
-				aLight.detachLight(this, this.id)
+		if (this.info.owner && this.info.owner.usingLights)
+			aLight.detachLight(this, this.id)
 		if (this.info.interfaceInfo.interface)
 			Client.removeInterfaceElement(this.info.interfaceInfo.interface, this.id, true)
 		this.sprite.renderable = true
@@ -1263,7 +1261,6 @@ GeneratedParticle : inherit [Particle]
 	function setup(pInfo, pOwner, pBypass)
 		this.name = this.id
 		// you are just precreating some of these types, so no need to run the code just yet
-		// this is so a interface particle doesn not gets its `onNew` called again since we use `Client.addInterfaceElement`
 		if (pBypass)
 			return
 		// All data coming in has already been prechecked, we just need to grab and assign a few things
