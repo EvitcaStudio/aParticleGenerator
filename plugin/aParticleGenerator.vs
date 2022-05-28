@@ -815,12 +815,18 @@ ParticleGenerator
 			else
 				if (this.settings.active)
 					if (this.screenBasedParticles.length)
-						foreach (let particle in this.screenBasedParticles)
+						for (let i = this.screenBasedParticles.length - 1; i >= 0; i--)
+							let particle = this.screenBasedParticles[i]
 							this.update(particle)
+							if (!this.update)
+								return
 
 					if (this.mapBasedParticles.length)
-						foreach (let particle in this.mapBasedParticles)
+						for (let i = this.mapBasedParticles.length - 1; i >= 0; i--)
+							let particle = this.mapBasedParticles[i]
 							this.update(particle)
+							if (!this.update)
+								return
 				else
 					if (!this.settings.paused)
 						this.destroy(true)
@@ -888,8 +894,11 @@ ParticleGenerator
 	function removeParticle(pParticle)
 		pParticle.info.active = false
 		pParticle.mapName = ''
-		let properStorageArray = (pParticle.info.owner.settings.interfaceInfo.interface ? pParticle.info.owner.screenBasedParticles : pParticle.info.owner.mapBasedParticles)
-		foreach (let particle in properStorageArray)
+		let properStorageArray = (pParticle.info.interfaceInfo.interface ? this.screenBasedParticles : this.mapBasedParticles)
+		for (let i = properStorageArray.length - 1; i >= 0; i--)
+			let particle = properStorageArray[i];
+			if (particle === pParticle)
+				properStorageArray.splice(i, 1)
 			if (particle.info.active)
 				return
 		if (this.settings.pauseEnd)
